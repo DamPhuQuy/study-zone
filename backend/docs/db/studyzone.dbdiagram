@@ -1,0 +1,195 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "users",
+      "schemaName": "public",
+      "x": -92.89463327891791,
+      "y": 374.64846665111924
+    },
+    {
+      "name": "music",
+      "schemaName": "public",
+      "x": 759.2253162896457,
+      "y": 115.45848880597006
+    },
+    {
+      "name": "music_saved",
+      "schemaName": "public",
+      "x": 303.69163945895525,
+      "y": 27.49317499416972
+    },
+    {
+      "name": "user_unlocked_music",
+      "schemaName": "public",
+      "x": 299.8259168027052,
+      "y": 263.2497194204759
+    },
+    {
+      "name": "backgrounds",
+      "schemaName": "public",
+      "x": 664.7258774486942,
+      "y": 475.60237508745337
+    },
+    {
+      "name": "backgrounds_saved",
+      "schemaName": "public",
+      "x": 334.12249594185676,
+      "y": 674.4667014173824
+    },
+    {
+      "name": "user_unlocked_backgrounds",
+      "schemaName": "public",
+      "x": 311.3047867468536,
+      "y": 918.6932652098873
+    },
+    {
+      "name": "study_sessions",
+      "schemaName": "public",
+      "x": -92.89463327891791,
+      "y": 1160.6932652098872
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "music_saved",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "music",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "music_id"
+      ],
+      "secondTableName": "music_saved",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "user_unlocked_music",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "music",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "music_id"
+      ],
+      "secondTableName": "user_unlocked_music",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "backgrounds_saved",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "backgrounds",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "background_id"
+      ],
+      "secondTableName": "backgrounds_saved",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "user_unlocked_backgrounds",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "backgrounds",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "background_id"
+      ],
+      "secondTableName": "user_unlocked_backgrounds",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "study_sessions",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}
