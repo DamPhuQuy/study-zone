@@ -2,6 +2,9 @@ package com.studentzone.app.background.entity;
 
 import java.util.List;
 
+import com.studentzone.app.saved.entity.BackgroundSavedEntity;
+import com.studentzone.app.unlock.entity.BackgroundUnlockedEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -30,8 +33,8 @@ public class BackgroundEntity {
     private String imageUrl;
 
     @OneToMany(mappedBy = "background")
-    private List<backgroundSavedEntity> backgroundSavedByUsers;
+    private List<BackgroundSavedEntity> backgroundSavedByUsers;
 
     @OneToMany(mappedBy = "background")
-    private List<backgroundUnlockedEntity> backgroundUnlockedByUsers;
+    private List<BackgroundUnlockedEntity> backgroundUnlockedByUsers;
 }
