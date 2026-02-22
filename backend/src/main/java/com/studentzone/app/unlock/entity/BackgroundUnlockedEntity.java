@@ -2,12 +2,13 @@ package com.studentzone.app.unlock.entity;
 
 import java.time.LocalDateTime;
 
-import com.studentzone.app.music.entity.MusicEntity;
+import org.springframework.data.annotation.Id;
+
+import com.studentzone.app.background.entity.BackgroundEntity;
 import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -18,13 +19,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "music_unlocked")
+@Table(name = "background_unlocked")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MusicUnlockedEntity {
+public class BackgroundUnlockedEntity {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
@@ -34,8 +35,8 @@ public class MusicUnlockedEntity {
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "music_id")
-    private MusicEntity music;
+    @JoinColumn(name = "background_id")
+    private BackgroundEntity background;
 
     Long pointsUsed;
 
