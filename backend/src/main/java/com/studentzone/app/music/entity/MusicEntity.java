@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.studentzone.app.saved.entity.MusicSavedEntity;
-import com.studentzone.app.unlock.entity.MusicUnlockedEntity;
+import com.studentzone.app.unlocked.entity.MusicUnlockedEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

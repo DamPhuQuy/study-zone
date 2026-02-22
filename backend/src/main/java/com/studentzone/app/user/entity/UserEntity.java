@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.studentzone.app.saved.entity.BackgroundSavedEntity;
 import com.studentzone.app.saved.entity.MusicSavedEntity;
-import com.studentzone.app.unlock.entity.BackgroundUnlockedEntity;
-import com.studentzone.app.unlock.entity.MusicUnlockedEntity;
+import com.studentzone.app.unlocked.entity.BackgroundUnlockedEntity;
+import com.studentzone.app.unlocked.entity.MusicUnlockedEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

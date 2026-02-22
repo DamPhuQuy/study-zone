@@ -1,4 +1,4 @@
-package com.studentzone.app.unlock.entity;
+package com.studentzone.app.unlocked.entity;
 
 import java.time.LocalDateTime;
 

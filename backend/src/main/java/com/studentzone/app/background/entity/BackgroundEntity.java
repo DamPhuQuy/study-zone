@@ -3,7 +3,7 @@ package com.studentzone.app.background.entity;
 import java.util.List;
 
 import com.studentzone.app.saved.entity.BackgroundSavedEntity;
-import com.studentzone.app.unlock.entity.BackgroundUnlockedEntity;
+import com.studentzone.app.unlocked.entity.BackgroundUnlockedEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
