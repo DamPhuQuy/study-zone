@@ -1,8 +1,7 @@
-package com.studentzone.app.unlocked.entity;
+package com.studentzone.app.music.entity;
 
 import java.time.LocalDateTime;
 
-import com.studentzone.app.music.entity.MusicEntity;
 import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
@@ -18,13 +17,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "music_unlocked")
+@Table(name = "music_saved")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MusicUnlockedEntity {
+public class MusicSavedEntity {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
@@ -37,7 +36,5 @@ public class MusicUnlockedEntity {
     @JoinColumn(name = "music_id")
     private MusicEntity music;
 
-    Long pointsUsed;
-
-    private LocalDateTime unlockedAt;
+    LocalDateTime savedAt;
 }

@@ -3,10 +3,10 @@ package com.studentzone.app.user.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.studentzone.app.saved.entity.BackgroundSavedEntity;
-import com.studentzone.app.saved.entity.MusicSavedEntity;
-import com.studentzone.app.unlocked.entity.BackgroundUnlockedEntity;
-import com.studentzone.app.unlocked.entity.MusicUnlockedEntity;
+import com.studentzone.app.background.entity.BackgroundSavedEntity;
+import com.studentzone.app.background.entity.BackgroundUnlockedEntity;
+import com.studentzone.app.music.entity.MusicSavedEntity;
+import com.studentzone.app.music.entity.MusicUnlockedEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

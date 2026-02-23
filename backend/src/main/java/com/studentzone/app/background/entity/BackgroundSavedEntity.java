@@ -1,10 +1,9 @@
-package com.studentzone.app.unlocked.entity;
+package com.studentzone.app.background.entity;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 
-import com.studentzone.app.background.entity.BackgroundEntity;
 import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
@@ -19,13 +18,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "background_unlocked")
+@Table(name = "background_saved")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BackgroundUnlockedEntity {
+public class BackgroundSavedEntity {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +37,5 @@ public class BackgroundUnlockedEntity {
     @JoinColumn(name = "background_id")
     private BackgroundEntity background;
 
-    Long pointsUsed;
-
-    private LocalDateTime unlockedAt;
+    private LocalDateTime savedAt;
 }

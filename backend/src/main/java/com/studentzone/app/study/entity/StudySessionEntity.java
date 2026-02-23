@@ -1,15 +1,10 @@
-package com.studentzone.app.saved.entity;
+package com.studentzone.app.study.entity;
 
 import java.time.LocalDateTime;
-
-import com.studentzone.app.music.entity.MusicEntity;
-import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,24 +13,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "music_saved")
+@Table(name = "study_session")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MusicSavedEntity {
+public class StudySessionEntity {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
-    @ManyToOne
-    @JoinColumn(name = "music_id")
-    private MusicEntity music;
-
-    LocalDateTime savedAt;
+    private Long userId;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private Long pointsEarned;
 }

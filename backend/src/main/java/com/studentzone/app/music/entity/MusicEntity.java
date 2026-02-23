@@ -3,9 +3,6 @@ package com.studentzone.app.music.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.studentzone.app.saved.entity.MusicSavedEntity;
-import com.studentzone.app.unlocked.entity.MusicUnlockedEntity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
