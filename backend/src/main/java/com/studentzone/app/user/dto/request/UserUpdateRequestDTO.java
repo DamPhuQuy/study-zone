@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserUpdateRequest {
+public class UserUpdateRequestDTO {
     @Size(min = 3, message = "Username must be at least 3 characters")
     private String username;
 

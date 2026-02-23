@@ -2,8 +2,8 @@ package com.studentzone.app.user.dto.mapper;
 
 import java.time.LocalDateTime;
 
-import com.studentzone.app.user.dto.request.UserCreateRequest;
-import com.studentzone.app.user.dto.response.UserInfoResponse;
+import com.studentzone.app.user.dto.request.UserCreateRequestDTO;
+import com.studentzone.app.user.dto.response.UserInfoResponseDTO;
 import com.studentzone.app.user.entity.UserEntity;
 
 import lombok.AccessLevel;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-	public static UserEntity toEntity(UserCreateRequest request) {
+	public static UserEntity toEntity(UserCreateRequestDTO request) {
 		if (request == null) {
 			return null;
 		}
@@ -27,11 +27,11 @@ public class UserMapper {
 				.build();
 	}
 
-	public static UserInfoResponse toResponse(UserEntity user) {
+	public static UserInfoResponseDTO toResponse(UserEntity user) {
 		if (user == null) {
 			return null;
 		}
-		return UserInfoResponse.builder()
+		return UserInfoResponseDTO.builder()
 				.id(user.getId())
 				.username(user.getUsername())
 				.email(user.getEmail())

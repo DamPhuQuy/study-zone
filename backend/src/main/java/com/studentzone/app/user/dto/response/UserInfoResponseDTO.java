@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserInfoResponse {
+public class UserInfoResponseDTO {
     private Long id;
     private String username;
     private String email;

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserCreateRequest {
+public class UserCreateRequestDTO {
     @NotBlank(message = "Username is required")
     private String username;
 
