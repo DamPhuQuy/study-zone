@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -36,10 +37,10 @@ public class MusicEntity {
 
     private boolean isActive;
 
-    @OneToMany(mappedBy = "music")
+    @OneToMany(mappedBy = "music", fetch = FetchType.LAZY)
     List<MusicSavedEntity> musicSavedByUsers;
 
-    @OneToMany(mappedBy = "music")
+    @OneToMany(mappedBy = "music", fetch = FetchType.LAZY)
     List<MusicUnlockedEntity> musicUnlockedByUsers;
 
     private LocalDateTime createdAt;

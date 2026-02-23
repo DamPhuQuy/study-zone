@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.studentzone.app.user.dto.mapper.UserMapper;
+import com.studentzone.app.user.dto.request.UserCreateRequest;
+import com.studentzone.app.user.dto.response.UserInfoResponse;
 import com.studentzone.app.user.entity.UserEntity;
 import com.studentzone.app.user.repository.UserRepository;
 
@@ -22,33 +25,24 @@ public class UserService {
 
 	// create
 
-	public UserEntity createUser(UserEntity user) {
-		LocalDateTime now = LocalDateTime.now();
-		if (user.getCreatedAt() == null) {
-			user.setCreatedAt(now);
-		}
-		user.setUpdatedAt(now);
-		if (user.getTotalPoints() == null) {
-			user.setTotalPoints(0L);
-		}
-		if (user.getTotalTimes() == null) {
-			user.setTotalTimes(0L);
-		}
-		return userRepository.save(user);
+	public UserInfoResponse createUser(UserCreateRequest request) {
+		UserEntity user = UserMapper.toEntity(request);
+
+        return UserMapper.toResponse(userRepository.save(user));
 	}
 
 	// read
 
-	public Optional<UserEntity> findById(Long userId) {
-		return userRepository.findById(userId);
+	public Optional<UserInfoResponse> findById(Long userId) {
+		return userRepository.findById(userId).map(UserMapper::toResponse);
 	}
 
-	public Optional<UserEntity> findByUsername(String username) {
-		return userRepository.findByUsername(username);
+	public Optional<UserInfoResponse> findByUsername(String username) {
+		return userRepository.findByUsername(username).map(UserMapper::toResponse);
 	}
 
-	public Optional<UserEntity> findByEmail(String email) {
-		return userRepository.findByEmail(email);
+	public Optional<UserInfoResponse> findByEmail(String email) {
+		return userRepository.findByEmail(email).map(UserMapper::toResponse);
 	}
 
 	public boolean existsByUsername(String username) {
@@ -59,52 +53,52 @@ public class UserService {
 		return userRepository.existsByEmail(email);
 	}
 
-	public List<UserEntity> searchByUsername(String username) {
-		return userRepository.findByUsernameContainingIgnoreCase(username);
+	public List<UserInfoResponse> searchByUsername(String username) {
+		return userRepository.findByUsernameContainingIgnoreCase(username).stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> getLeaderboardByPoints() {
-		return userRepository.findAllByOrderByTotalPointsDesc();
+	public List<UserInfoResponse> getLeaderboardByPoints() {
+		return userRepository.findAllByOrderByTotalPointsDesc().stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> getLeaderboardByPointsAndTimes() {
-		return userRepository.findAllByOrderByTotalPointsDescTotalTimesDesc();
+	public List<UserInfoResponse> getLeaderboardByPointsAndTimes() {
+		return userRepository.findAllByOrderByTotalPointsDescTotalTimesDesc().stream().map(UserMapper::toResponse).toList();
 	}
 
 	public Page<UserEntity> getLeaderboardByPoints(Pageable pageable) {
 		return userRepository.findAllByOrderByTotalPointsDesc(pageable);
 	}
 
-	public List<UserEntity> getTop10ByPoints() {
-		return userRepository.findTop10ByOrderByTotalPointsDesc();
+	public List<UserInfoResponse> getTop10ByPoints() {
+		return userRepository.findTop10ByOrderByTotalPointsDesc().stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> findByMinPoints(Long points) {
-		return userRepository.findByTotalPointsGreaterThanEqual(points);
+	public List<UserInfoResponse> findByMinPoints(Long points) {
+		return userRepository.findByTotalPointsGreaterThanEqual(points).stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> findByMinTimes(Long times) {
-		return userRepository.findByTotalTimesGreaterThanEqual(times);
+	public List<UserInfoResponse> findByMinTimes(Long times) {
+		return userRepository.findByTotalTimesGreaterThanEqual(times).stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> findCreatedAfter(LocalDateTime date) {
-		return userRepository.findByCreatedAtAfter(date);
+	public List<UserInfoResponse> findCreatedAfter(LocalDateTime date) {
+		return userRepository.findByCreatedAtAfter(date).stream().map(UserMapper::toResponse).toList();
 	}
 
-	public List<UserEntity> findCreatedBetween(LocalDateTime startDate, LocalDateTime endDate) {
-		return userRepository.findByCreatedAtBetween(startDate, endDate);
+	public List<UserInfoResponse> findCreatedBetween(LocalDateTime startDate, LocalDateTime endDate) {
+		return userRepository.findByCreatedAtBetween(startDate, endDate).stream().map(UserMapper::toResponse).toList();
 	}
 
-	public Optional<UserEntity> findByIdWithUnlockedItems(Long userId) {
-		return userRepository.findByIdWithUnlockedItems(userId);
+	public Optional<UserInfoResponse> findByIdWithUnlockedItems(Long userId) {
+		return userRepository.findByIdWithUnlockedItems(userId).map(UserMapper::toResponse);
 	}
 
-	public Optional<UserEntity> findByIdWithSavedItems(Long userId) {
-		return userRepository.findByIdWithSavedItems(userId);
+	public Optional<UserInfoResponse> findByIdWithSavedItems(Long userId) {
+		return userRepository.findByIdWithSavedItems(userId).map(UserMapper::toResponse);
 	}
 
-	public List<UserEntity> findByPointsBetween(Long minPoints, Long maxPoints) {
-		return userRepository.findByTotalPointsBetween(minPoints, maxPoints);
+	public List<UserInfoResponse> findByPointsBetween(Long minPoints, Long maxPoints) {
+		return userRepository.findByTotalPointsBetween(minPoints, maxPoints).stream().map(UserMapper::toResponse).toList();
 	}
 
 	public long countCreatedAfter(LocalDateTime date) {

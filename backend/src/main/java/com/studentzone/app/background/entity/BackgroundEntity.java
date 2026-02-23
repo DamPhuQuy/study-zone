@@ -3,6 +3,7 @@ package com.studentzone.app.background.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -29,9 +30,9 @@ public class BackgroundEntity {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "background")
+    @OneToMany(mappedBy = "background", fetch = FetchType.LAZY)
     private List<BackgroundSavedEntity> backgroundSavedByUsers;
 
-    @OneToMany(mappedBy = "background")
+    @OneToMany(mappedBy = "background", fetch = FetchType.LAZY)
     private List<BackgroundUnlockedEntity> backgroundUnlockedByUsers;
 }

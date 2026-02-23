@@ -3,12 +3,16 @@ package com.studentzone.app.user.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.studentzone.app.background.entity.BackgroundSavedEntity;
 import com.studentzone.app.background.entity.BackgroundUnlockedEntity;
 import com.studentzone.app.music.entity.MusicSavedEntity;
 import com.studentzone.app.music.entity.MusicUnlockedEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -44,18 +48,21 @@ public class UserEntity {
 
     private String avatarUrl;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<MusicSavedEntity> savedMusic;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<MusicUnlockedEntity> unlockedMusic;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BackgroundSavedEntity> savedBackgrounds;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BackgroundUnlockedEntity> unlockedBackgrounds;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
