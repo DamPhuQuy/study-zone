@@ -10,6 +10,7 @@ import com.studentzone.app.background.entity.BackgroundSavedEntity;
 import com.studentzone.app.background.entity.BackgroundUnlockedEntity;
 import com.studentzone.app.music.entity.MusicSavedEntity;
 import com.studentzone.app.music.entity.MusicUnlockedEntity;
+import com.studentzone.app.study.entity.StudySessionEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -59,6 +60,9 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BackgroundUnlockedEntity> unlockedBackgrounds;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<StudySessionEntity> studyHistory;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
