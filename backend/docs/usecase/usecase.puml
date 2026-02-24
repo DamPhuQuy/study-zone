@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Guest" as g
+actor "User" as u
+actor "Admin" as a
+
+rectangle "Study-Zone System" {
+    (Login) as login
+    (Register) as reg
+    (View Leaderboard) as view_lb
+
+    (Study) as study
+    (Study without Ranking) as study_no_rank
+
+    (Choose Music) as ch_mu
+    (Choose Background) as ch_ba
+    (Listen to Music) as li_mu
+
+    (Manage Music) as add_mu
+    (Manage Background) as add_ba
+
+    ' Logic cho User
+    ch_ba ..> study : <<extend>>
+    study ..> ch_mu : <<include>>
+    study ..> li_mu : <<include>>
+
+    ' Logic cho Guest
+    study_no_rank ..> li_mu : <<include>>
+}
+
+' Phân quyền
+u --|> g : "Inherits"
+g -- study_no_rank
+g -- li_mu
+
+u -- reg
+u -- login
+u -- view_lb
+u -- study
+
+a -- add_mu
+a -- add_ba
+@enduml

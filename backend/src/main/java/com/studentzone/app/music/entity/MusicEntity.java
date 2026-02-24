@@ -27,7 +27,7 @@ public class MusicEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
     private String musicUrl;
 
