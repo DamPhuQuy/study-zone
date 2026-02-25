@@ -4,6 +4,8 @@ import com.studentzone.app.study.dto.mapper.StudySessionMapper;
 import com.studentzone.app.user.dto.request.UserCreateRequestDTO;
 import com.studentzone.app.user.dto.response.UserDetailedResponseDTO;
 import com.studentzone.app.user.dto.response.UserPointsResponseDTO;
+import com.studentzone.app.user.dto.response.UserSavedBackgroundResponseDTO;
+import com.studentzone.app.user.dto.response.UserSavedMusicResponseDTO;
 import com.studentzone.app.user.dto.response.UserTimesResponseDTO;
 import com.studentzone.app.user.entity.UserEntity;
 
@@ -44,6 +46,26 @@ public class UserMapper {
         .totalTimes(user.getTotalTimes())
         .build();
     }
+
+    public static UserSavedMusicResponseDTO toUserSavedMusicResponseDTO(UserEntity user) {
+        return UserSavedMusicResponseDTO.builder()
+        .id(user.getId())
+        .savedMusicUrls(user.getSavedMusic().stream()
+                .map(m -> m.getMusic().getMusicUrl())
+                .toList())
+        .build();
+    }
+
+    public static UserSavedBackgroundResponseDTO toUserSavedBackgroundResponseDTO(UserEntity user) {
+        return UserSavedBackgroundResponseDTO.builder()
+        .id(user.getId())
+        .savedBackgroundUrls(user.getSavedBackgrounds().stream()
+                .map(b -> b.getBackground().getImageUrl())
+                .toList())
+        .build();
+    }
+
+    public static 
 
     private UserMapper() {}
 }
