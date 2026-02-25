@@ -64,9 +64,33 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<StudySessionEntity> studyHistory;
 
+    Role role;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public void addSavedMusic(MusicSavedEntity music) {
+        savedMusic.add(music);
+        music.setUser(this);
+    }
+
+    public void addUnlockedMusic(MusicUnlockedEntity music) {
+        unlockedMusic.add(music);
+        music.setUser(this);
+    }
+
+    public void addSavedBackground(BackgroundSavedEntity background) {
+        savedBackgrounds.add(background);
+        background.setUser(this);
+    }
+
+    public void addStudySession(StudySessionEntity session) {
+        studyHistory.add(session);
+        totalPoints += session.getPointsEarned();
+        totalTimes += session.getDiffTime();
+        session.setUser(this);
+    }
 }
