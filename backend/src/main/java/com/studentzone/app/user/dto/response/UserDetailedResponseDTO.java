@@ -1,9 +1,5 @@
 package com.studentzone.app.user.dto.response;
 
-import java.util.List;
-
-import com.studentzone.app.study.dto.response.StudySessionResponseDTO;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,5 +12,4 @@ public class UserDetailedResponseDTO {
     private Long totalPoints;
     private Long totalTimes;
     private String avatarUrl;
-    private List<StudySessionResponseDTO> studyHistory;
 }

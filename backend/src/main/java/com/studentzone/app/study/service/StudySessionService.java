@@ -2,11 +2,12 @@ package com.studentzone.app.study.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.studentzone.app.study.dto.request.StudyEndSessionRequestDTO;
-import com.studentzone.app.study.dto.request.StudySessionCreationRequestDTO;
+import com.studentzone.app.study.dto.mapper.StudySessionMapper;
+import com.studentzone.app.study.dto.response.StudySessionResponseDTO;
 import com.studentzone.app.study.entity.StudySessionEntity;
 import com.studentzone.app.study.repository.StudySessionRepository;
 import com.studentzone.app.user.entity.UserEntity;
@@ -23,9 +24,17 @@ public class StudySessionService {
         this.userRepository = userRepository;
     }
 
-    public StudySessionEntity startSession(StudySessionCreationRequestDTO request) {
-        UserEntity user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + request.getUserId()));
+    public List<StudySessionResponseDTO> getStudySessionsByUserId(Long userId) {
+        List<StudySessionEntity> studySessions = studySessionRepository.findByUserId(userId);
+
+        return studySessions.stream()
+                .map(StudySessionMapper::toDTO)
+                .toList();
+    }
+
+    public StudySessionEntity startSession(Long userId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         StudySessionEntity studySession = StudySessionEntity.builder()
                 .user(user)
@@ -34,9 +43,9 @@ public class StudySessionService {
         return studySessionRepository.save(studySession);
     }
 
-    public StudySessionEntity endSession(StudyEndSessionRequestDTO request) {
-        StudySessionEntity studySession = studySessionRepository.findById(request.getSessionId())
-                .orElseThrow(() -> new RuntimeException("Study session not found with id: " + request.getSessionId()));
+    public StudySessionEntity endSession(Long sessionId) {
+        StudySessionEntity studySession = studySessionRepository.findById(sessionId)
+                .orElseThrow(() -> new RuntimeException("Study session not found with id: " + sessionId));
 
         studySession.setEndTime(LocalDateTime.now());
 
