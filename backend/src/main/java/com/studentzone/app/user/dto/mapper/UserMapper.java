@@ -65,7 +65,5 @@ public class UserMapper {
         .build();
     }
 
-    public static 
-
     private UserMapper() {}
 }

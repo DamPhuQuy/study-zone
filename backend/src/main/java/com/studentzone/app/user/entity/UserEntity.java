@@ -90,7 +90,6 @@ public class UserEntity {
     public void addStudySession(StudySessionEntity session) {
         studyHistory.add(session);
         totalPoints += session.getPointsEarned();
-        totalTimes += session.getDiffTime();
         session.setUser(this);
     }
 }

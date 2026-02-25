@@ -11,6 +11,6 @@ public class StudySessionResponseDTO {
     private Long id;
     private Long userId;
     private Long pointsEarned;
-    private Long diffTime;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }
