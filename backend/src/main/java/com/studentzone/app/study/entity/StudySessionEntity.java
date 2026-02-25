@@ -2,8 +2,6 @@ package com.studentzone.app.study.entity;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
@@ -34,9 +32,7 @@ public class StudySessionEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @CreationTimestamp
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Long pointsEarned;
-    private Long diffTime;
 }

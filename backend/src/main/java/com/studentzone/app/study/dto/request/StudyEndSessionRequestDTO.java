@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class StudySessionCreationRequestDTO {
-    private Long userId;
+public class StudyEndSessionRequestDTO {
+    private Long sessionId;
 }
