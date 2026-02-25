@@ -2,6 +2,10 @@ package com.studentzone.app.study.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.studentzone.app.user.entity.UserEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -27,9 +31,10 @@ public class StudySessionEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "study_session_id")
-    private StudySessionEntity studySession;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
+    @CreationTimestamp
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Long pointsEarned;
