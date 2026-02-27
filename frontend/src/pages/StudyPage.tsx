@@ -1,28 +1,28 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { studyApi } from '../api/study';
-import { musicApi } from '../api/music';
-import { backgroundApi } from '../api/background';
-import type {
-  StudySessionResponseDTO,
-  MusicSavedResponseDTO,
-  BackgroundSavedResponseDTO,
-} from '../types';
-import toast from 'react-hot-toast';
+import clsx from "clsx";
 import {
-  Play,
-  Pause,
-  Square,
-  SkipForward,
-  SkipBack,
-  Volume2,
-  VolumeX,
-  Music,
-  Image,
   ChevronLeft,
   ChevronRight,
+  Image,
+  Music,
+  Pause,
+  Play,
+  SkipBack,
+  SkipForward,
+  Square,
   Star,
-} from 'lucide-react';
-import clsx from 'clsx';
+  Volume2,
+  VolumeX,
+} from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { backgroundApi } from "../api/background";
+import { musicApi } from "../api/music";
+import { studyApi } from "../api/study";
+import type {
+  BackgroundSavedResponseDTO,
+  MusicSavedResponseDTO,
+  StudySessionResponseDTO,
+} from "../types";
 
 // ─── Timer ────────────────────────────────────────────────────────────────────
 const FOCUS_SECS = 25 * 60;
@@ -31,21 +31,20 @@ const BREAK_SECS = 5 * 60;
 function formatTime(secs: number) {
   const m = Math.floor(secs / 60)
     .toString()
-    .padStart(2, '0');
-  const s = (secs % 60).toString().padStart(2, '0');
+    .padStart(2, "0");
+  const s = (secs % 60).toString().padStart(2, "0");
   return `${m}:${s}`;
 }
 
 // ─── Default backgrounds (fallback gradient layers) ───────────────────────────
-const GRADIENT_FALLBACK =
-  'linear-gradient(135deg, #0f0c29, #302b63, #24243e)';
+const GRADIENT_FALLBACK = "linear-gradient(135deg, #0f0c29, #302b63, #24243e)";
 
 export default function StudyPage() {
   // ── Session state ─────────────────────────────────────────────────────────
   const [session, setSession] = useState<StudySessionResponseDTO | null>(null);
 
   // ── Timer state ───────────────────────────────────────────────────────────
-  const [mode, setMode] = useState<'focus' | 'break'>('focus');
+  const [mode, setMode] = useState<"focus" | "break">("focus");
   const [timeLeft, setTimeLeft] = useState(FOCUS_SECS);
   const [timerRunning, setTimerRunning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -84,11 +83,13 @@ export default function StudyPage() {
           if (t <= 1) {
             clearInterval(timerRef.current!);
             setTimerRunning(false);
-            const next = mode === 'focus' ? 'break' : 'focus';
+            const next = mode === "focus" ? "break" : "focus";
             setMode(next);
-            setTimeLeft(next === 'focus' ? FOCUS_SECS : BREAK_SECS);
+            setTimeLeft(next === "focus" ? FOCUS_SECS : BREAK_SECS);
             toast.success(
-              next === 'break' ? '🎉 Focus done! Take a break.' : '⏰ Break over. Back to focus!'
+              next === "break"
+                ? "🎉 Focus done! Take a break."
+                : "⏰ Break over. Back to focus!",
             );
             return 0;
           }
@@ -114,7 +115,7 @@ export default function StudyPage() {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || savedMusic.length === 0) return;
-    audio.src = savedMusic[musicIdx]?.musicUrl ?? '';
+    audio.src = savedMusic[musicIdx]?.musicUrl ?? "";
     if (musicPlaying) audio.play().catch(() => {});
   }, [musicIdx, savedMusic]);
 
@@ -126,16 +127,21 @@ export default function StudyPage() {
       setMusicPlaying(false);
     } else {
       if (savedMusic.length === 0) {
-        toast.error('Save some music first in the Shop!');
+        toast.error("Save some music first in the Shop!");
         return;
       }
-      audio.src = savedMusic[musicIdx]?.musicUrl ?? '';
-      audio.play().catch(() => toast('Music preview not available in demo.', { icon: '🎵' }));
+      audio.src = savedMusic[musicIdx]?.musicUrl ?? "";
+      audio
+        .play()
+        .catch(() =>
+          toast("Music preview not available in demo.", { icon: "🎵" }),
+        );
       setMusicPlaying(true);
     }
   };
 
-  const prevTrack = () => setMusicIdx((i) => (i === 0 ? savedMusic.length - 1 : i - 1));
+  const prevTrack = () =>
+    setMusicIdx((i) => (i === 0 ? savedMusic.length - 1 : i - 1));
   const nextTrack = () => setMusicIdx((i) => (i + 1) % savedMusic.length);
 
   // ─── Session control ──────────────────────────────────────────────────────
@@ -144,9 +150,9 @@ export default function StudyPage() {
       const res = await studyApi.startSession();
       setSession(res.data);
       setTimerRunning(true);
-      toast.success('Study session started! 📚');
+      toast.success("Study session started! 📚");
     } catch {
-      toast.error('Failed to start session.');
+      toast.error("Failed to start session.");
     }
   }, []);
 
@@ -155,23 +161,29 @@ export default function StudyPage() {
     setTimerRunning(false);
     try {
       const res = await studyApi.endSession(session.id);
-      toast.success(`Session ended! +${res.data.pointsEarned?.toFixed(0)} pts 🎯`);
+      toast.success(
+        `Session ended! +${res.data.pointsEarned?.toFixed(0)} pts 🎯`,
+      );
       setSession(null);
-      setMode('focus');
+      setMode("focus");
       setTimeLeft(FOCUS_SECS);
     } catch {
-      toast.error('Failed to end session.');
+      toast.error("Failed to end session.");
     }
   }, [session]);
 
   // ─── Background ───────────────────────────────────────────────────────────
   const currentBg = savedBgs[bgIdx];
   const bgStyle: React.CSSProperties = currentBg?.imageUrl
-    ? { backgroundImage: `url(${currentBg.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    ? {
+        backgroundImage: `url(${currentBg.imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
     : { background: GRADIENT_FALLBACK };
 
   // ─── Progress circle ──────────────────────────────────────────────────────
-  const total = mode === 'focus' ? FOCUS_SECS : BREAK_SECS;
+  const total = mode === "focus" ? FOCUS_SECS : BREAK_SECS;
   const progress = (total - timeLeft) / total;
   const circumference = 2 * Math.PI * 110;
   const dash = circumference * (1 - progress);
@@ -179,7 +191,7 @@ export default function StudyPage() {
   return (
     <div
       className="relative flex flex-col items-center justify-center"
-      style={{ minHeight: 'calc(100vh - 64px)', ...bgStyle }}
+      style={{ minHeight: "calc(100vh - 64px)", ...bgStyle }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
@@ -191,20 +203,22 @@ export default function StudyPage() {
       <div className="relative z-10 flex flex-col items-center gap-6">
         {/* Mode toggle */}
         <div className="flex gap-2 bg-white/10 rounded-full p-1">
-          {(['focus', 'break'] as const).map((m) => (
+          {(["focus", "break"] as const).map((m) => (
             <button
               key={m}
               onClick={() => {
                 if (timerRunning) return;
                 setMode(m);
-                setTimeLeft(m === 'focus' ? FOCUS_SECS : BREAK_SECS);
+                setTimeLeft(m === "focus" ? FOCUS_SECS : BREAK_SECS);
               }}
               className={clsx(
-                'px-5 py-1.5 rounded-full text-sm font-medium capitalize transition',
-                mode === m ? 'bg-violet-600 text-white' : 'text-white/70 hover:text-white'
+                "px-5 py-1.5 rounded-full text-sm font-medium capitalize transition",
+                mode === m
+                  ? "bg-violet-600 text-white"
+                  : "text-white/70 hover:text-white",
               )}
             >
-              {m === 'focus' ? '🎯 Focus' : '☕ Break'}
+              {m === "focus" ? "🎯 Focus" : "☕ Break"}
             </button>
           ))}
         </div>
@@ -225,19 +239,21 @@ export default function StudyPage() {
               cy={130}
               r={110}
               fill="none"
-              stroke={mode === 'focus' ? '#7c3aed' : '#10b981'}
+              stroke={mode === "focus" ? "#7c3aed" : "#10b981"}
               strokeWidth={8}
               strokeDasharray={circumference}
               strokeDashoffset={dash}
               strokeLinecap="round"
-              style={{ transition: 'stroke-dashoffset 0.8s ease' }}
+              style={{ transition: "stroke-dashoffset 0.8s ease" }}
             />
           </svg>
           <div className="absolute flex flex-col items-center">
             <span className="text-6xl font-mono font-bold text-white tracking-tight">
               {formatTime(timeLeft)}
             </span>
-            <span className="text-white/50 text-sm mt-1 capitalize">{mode} mode</span>
+            <span className="text-white/50 text-sm mt-1 capitalize">
+              {mode} mode
+            </span>
           </div>
         </div>
 
@@ -246,16 +262,20 @@ export default function StudyPage() {
           <button
             onClick={() => setTimerRunning((r) => !r)}
             disabled={!session}
-            title={session ? undefined : 'Start a session first'}
+            title={session ? undefined : "Start a session first"}
             className="flex items-center gap-2 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-40 text-white rounded-full font-semibold transition"
           >
-            {timerRunning ? <Pause className="size-4" /> : <Play className="size-4" />}
-            {timerRunning ? 'Pause' : 'Resume'}
+            {timerRunning ? (
+              <Pause className="size-4" />
+            ) : (
+              <Play className="size-4" />
+            )}
+            {timerRunning ? "Pause" : "Resume"}
           </button>
           <button
             onClick={() => {
               setTimerRunning(false);
-              setTimeLeft(mode === 'focus' ? FOCUS_SECS : BREAK_SECS);
+              setTimeLeft(mode === "focus" ? FOCUS_SECS : BREAK_SECS);
             }}
             className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition text-sm"
           >
@@ -292,8 +312,8 @@ export default function StudyPage() {
         {/* Panel */}
         <div
           className={clsx(
-            'bg-black/70 backdrop-blur-xl border-l border-white/10 transition-all duration-300 overflow-hidden',
-            showBgPanel ? 'w-64' : 'w-0'
+            "bg-black/70 backdrop-blur-xl border-l border-white/10 transition-all duration-300 overflow-hidden",
+            showBgPanel ? "w-64" : "w-0",
           )}
         >
           <div className="w-64 p-4 h-full overflow-y-auto">
@@ -301,7 +321,9 @@ export default function StudyPage() {
               <Image className="size-4 text-violet-400" /> Backgrounds
             </h3>
             {savedBgs.length === 0 ? (
-              <p className="text-white/40 text-sm">No saved backgrounds. Visit Shop!</p>
+              <p className="text-white/40 text-sm">
+                No saved backgrounds. Visit Shop!
+              </p>
             ) : (
               <div className="grid grid-cols-2 gap-2">
                 {savedBgs.map((bg, i) => (
@@ -309,8 +331,10 @@ export default function StudyPage() {
                     key={bg.id}
                     onClick={() => setBgIdx(i)}
                     className={clsx(
-                      'relative aspect-video rounded-lg overflow-hidden border-2 transition',
-                      i === bgIdx ? 'border-violet-500' : 'border-transparent hover:border-white/30'
+                      "relative aspect-video rounded-lg overflow-hidden border-2 transition",
+                      i === bgIdx
+                        ? "border-violet-500"
+                        : "border-transparent hover:border-white/30",
                     )}
                   >
                     <img
@@ -318,11 +342,13 @@ export default function StudyPage() {
                       alt={bg.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
+                        (e.target as HTMLImageElement).style.display = "none";
                       }}
                     />
                     <div className="absolute inset-0 bg-black/30 flex items-end p-1">
-                      <span className="text-white text-xs truncate">{bg.name}</span>
+                      <span className="text-white text-xs truncate">
+                        {bg.name}
+                      </span>
                     </div>
                   </button>
                 ))}
@@ -335,7 +361,11 @@ export default function StudyPage() {
           onClick={() => setShowBgPanel((s) => !s)}
           className="flex items-center justify-center w-8 bg-black/60 backdrop-blur-xl border-l border-y border-white/10 rounded-l-lg text-white/70 hover:text-white transition"
         >
-          {showBgPanel ? <ChevronRight className="size-4" /> : <ChevronLeft className="size-4" />}
+          {showBgPanel ? (
+            <ChevronRight className="size-4" />
+          ) : (
+            <ChevronLeft className="size-4" />
+          )}
         </button>
       </div>
 
@@ -346,13 +376,17 @@ export default function StudyPage() {
           onClick={() => setShowMusicPanel((s) => !s)}
           className="flex items-center justify-center w-8 bg-black/60 backdrop-blur-xl border-r border-y border-white/10 rounded-r-lg text-white/70 hover:text-white transition"
         >
-          {showMusicPanel ? <ChevronLeft className="size-4" /> : <ChevronRight className="size-4" />}
+          {showMusicPanel ? (
+            <ChevronLeft className="size-4" />
+          ) : (
+            <ChevronRight className="size-4" />
+          )}
         </button>
         {/* Panel */}
         <div
           className={clsx(
-            'bg-black/70 backdrop-blur-xl border-r border-white/10 transition-all duration-300 overflow-hidden',
-            showMusicPanel ? 'w-64' : 'w-0'
+            "bg-black/70 backdrop-blur-xl border-r border-white/10 transition-all duration-300 overflow-hidden",
+            showMusicPanel ? "w-64" : "w-0",
           )}
         >
           <div className="w-64 p-4 h-full overflow-y-auto">
@@ -360,7 +394,9 @@ export default function StudyPage() {
               <Music className="size-4 text-violet-400" /> My Playlist
             </h3>
             {savedMusic.length === 0 ? (
-              <p className="text-white/40 text-sm">No saved music. Visit Shop!</p>
+              <p className="text-white/40 text-sm">
+                No saved music. Visit Shop!
+              </p>
             ) : (
               <div className="flex flex-col gap-1">
                 {savedMusic.map((m, i) => (
@@ -376,10 +412,10 @@ export default function StudyPage() {
                       }
                     }}
                     className={clsx(
-                      'flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-left transition',
+                      "flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-left transition",
                       i === musicIdx
-                        ? 'bg-violet-600/40 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
+                        ? "bg-violet-600/40 text-white"
+                        : "text-white/70 hover:bg-white/10 hover:text-white",
                     )}
                   >
                     <Music className="size-3 shrink-0" />
@@ -404,7 +440,7 @@ export default function StudyPage() {
           </div>
           <div className="overflow-hidden">
             <p className="text-white text-sm font-medium truncate">
-              {savedMusic[musicIdx]?.title ?? 'No track'}
+              {savedMusic[musicIdx]?.title ?? "No track"}
             </p>
             <p className="text-white/40 text-xs">Ambient</p>
           </div>
@@ -412,24 +448,41 @@ export default function StudyPage() {
 
         {/* Controls */}
         <div className="flex items-center gap-3">
-          <button onClick={prevTrack} className="text-white/60 hover:text-white transition">
+          <button
+            onClick={prevTrack}
+            className="text-white/60 hover:text-white transition"
+          >
             <SkipBack className="size-5" />
           </button>
           <button
             onClick={toggleMusicPlay}
             className="size-10 rounded-full bg-violet-600 hover:bg-violet-500 flex items-center justify-center text-white transition"
           >
-            {musicPlaying ? <Pause className="size-5" /> : <Play className="size-5" />}
+            {musicPlaying ? (
+              <Pause className="size-5" />
+            ) : (
+              <Play className="size-5" />
+            )}
           </button>
-          <button onClick={nextTrack} className="text-white/60 hover:text-white transition">
+          <button
+            onClick={nextTrack}
+            className="text-white/60 hover:text-white transition"
+          >
             <SkipForward className="size-5" />
           </button>
         </div>
 
         {/* Volume */}
         <div className="flex items-center gap-2 w-48 justify-end">
-          <button onClick={() => setMuted((m) => !m)} className="text-white/60 hover:text-white transition">
-            {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
+          <button
+            onClick={() => setMuted((m) => !m)}
+            className="text-white/60 hover:text-white transition"
+          >
+            {muted ? (
+              <VolumeX className="size-4" />
+            ) : (
+              <Volume2 className="size-4" />
+            )}
           </button>
           <input
             type="range"

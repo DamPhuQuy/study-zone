@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import AppLayout from './components/AppLayout';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import StudyPage from './pages/StudyPage';
-import ProfilePage from './pages/ProfilePage';
-import ShopPage from './pages/ShopPage';
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AppLayout from "./components/AppLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import ShopPage from "./pages/ShopPage";
+import StudyPage from "./pages/StudyPage";
 
 export default function App() {
   return (
@@ -17,9 +17,9 @@ export default function App() {
           position="top-right"
           toastOptions={{
             style: {
-              background: '#1e1b4b',
-              color: '#fff',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: "#1e1b4b",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.1)",
             },
           }}
         />
@@ -44,4 +44,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-

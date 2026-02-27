@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { authApi } from '../api/auth';
-import toast from 'react-hot-toast';
-import { Music, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Music } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { authApi } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [form, setForm] = useState({ username: "", password: "" });
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -19,11 +19,11 @@ export default function LoginPage() {
       const res = await authApi.login(form);
       login(res.data);
       toast.success(`Welcome back, ${res.data.username}!`);
-      navigate('/study');
+      navigate("/study");
     } catch (err: unknown) {
       const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-        'Login failed';
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Login failed";
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -46,7 +46,9 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-white/70 mb-1">Username</label>
+              <label className="block text-sm text-white/70 mb-1">
+                Username
+              </label>
               <input
                 type="text"
                 required
@@ -58,13 +60,17 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm text-white/70 mb-1">Password</label>
+              <label className="block text-sm text-white/70 mb-1">
+                Password
+              </label>
               <div className="relative">
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  type={showPw ? "text" : "password"}
                   required
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
                   placeholder="••••••••"
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-white placeholder-white/30 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
                 />
@@ -73,7 +79,11 @@ export default function LoginPage() {
                   onClick={() => setShowPw(!showPw)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition"
                 >
-                  {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPw ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -83,13 +93,16 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-60 text-white font-semibold rounded-xl transition mt-2"
             >
-              {loading ? 'Signing in…' : 'Sign In'}
+              {loading ? "Signing in…" : "Sign In"}
             </button>
           </form>
 
           <p className="text-center text-white/50 text-sm mt-6">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-violet-400 hover:text-violet-300 transition">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-violet-400 hover:text-violet-300 transition"
+            >
               Register
             </Link>
           </p>

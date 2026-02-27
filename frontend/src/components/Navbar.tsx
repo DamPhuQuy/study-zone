@@ -1,12 +1,12 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { BookOpen, Music, ShoppingBag, User, LogOut } from 'lucide-react';
-import clsx from 'clsx';
+import clsx from "clsx";
+import { BookOpen, LogOut, Music, ShoppingBag, User } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
-  { to: '/study', label: 'Study', icon: BookOpen },
-  { to: '/shop', label: 'Shop', icon: ShoppingBag },
-  { to: '/profile', label: 'Profile', icon: User },
+  { to: "/study", label: "Study", icon: BookOpen },
+  { to: "/shop", label: "Shop", icon: ShoppingBag },
+  { to: "/profile", label: "Profile", icon: User },
 ];
 
 export default function Navbar() {
@@ -16,13 +16,16 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 py-3 bg-black/40 backdrop-blur-md border-b border-white/10">
       {/* Logo */}
-      <Link to="/study" className="flex items-center gap-2 text-white font-bold text-lg tracking-tight">
+      <Link
+        to="/study"
+        className="flex items-center gap-2 text-white font-bold text-lg tracking-tight"
+      >
         <Music className="size-5 text-violet-400" />
         <span>StudyZone</span>
       </Link>
@@ -34,10 +37,10 @@ export default function Navbar() {
             key={to}
             to={to}
             className={clsx(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
               pathname.startsWith(to)
-                ? 'bg-violet-600 text-white'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
+                ? "bg-violet-600 text-white"
+                : "text-white/70 hover:text-white hover:bg-white/10",
             )}
           >
             <Icon className="size-4" />

@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
-import { userApi } from '../api/user';
-import { studyApi } from '../api/study';
-import type { UserDetailedResponseDTO, StudySessionResponseDTO } from '../types';
-import toast from 'react-hot-toast';
-import { Clock, Star, BookOpen, Calendar } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { studyApi } from "../api/study";
+import { userApi } from "../api/user";
+import type {
+  StudySessionResponseDTO,
+  UserDetailedResponseDTO,
+} from "../types";
 
 function formatDuration(seconds: number) {
   const h = Math.floor(seconds / 3600);
@@ -13,17 +16,18 @@ function formatDuration(seconds: number) {
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
 function sessionDuration(session: StudySessionResponseDTO) {
-  if (!session.endTime) return 'Ongoing';
-  const diff = new Date(session.endTime).getTime() - new Date(session.startTime).getTime();
+  if (!session.endTime) return "Ongoing";
+  const diff =
+    new Date(session.endTime).getTime() - new Date(session.startTime).getTime();
   return formatDuration(Math.floor(diff / 1000));
 }
 
@@ -39,7 +43,7 @@ export default function ProfilePage() {
         // newest first
         setSessions([...sessionsRes.data].reverse());
       })
-      .catch(() => toast.error('Failed to load profile data'))
+      .catch(() => toast.error("Failed to load profile data"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -58,7 +62,10 @@ export default function ProfilePage() {
       {/* Header card */}
       <div className="bg-gradient-to-br from-violet-900/40 to-gray-900 border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6 mb-8">
         <img
-          src={user.avatarUrl ?? `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`}
+          src={
+            user.avatarUrl ??
+            `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`
+          }
           alt={user.username}
           className="size-20 rounded-full border-4 border-violet-500 bg-gray-800"
         />
@@ -73,8 +80,8 @@ export default function ProfilePage() {
           <p className="text-white/40 text-xs mb-1">Member since</p>
           <p className="text-white text-sm">
             {new Date(user.createdAt).toLocaleDateString(undefined, {
-              month: 'short',
-              year: 'numeric',
+              month: "short",
+              year: "numeric",
             })}
           </p>
         </div>
@@ -84,25 +91,25 @@ export default function ProfilePage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {[
           {
-            label: 'Total Points',
+            label: "Total Points",
             value: user.totalPoints?.toFixed(0) ?? 0,
             icon: Star,
-            color: 'text-yellow-400',
-            bg: 'from-yellow-900/30',
+            color: "text-yellow-400",
+            bg: "from-yellow-900/30",
           },
           {
-            label: 'Total Study Time',
+            label: "Total Study Time",
             value: formatDuration(user.totalTimes ?? 0),
             icon: Clock,
-            color: 'text-blue-400',
-            bg: 'from-blue-900/30',
+            color: "text-blue-400",
+            bg: "from-blue-900/30",
           },
           {
-            label: 'Sessions',
+            label: "Sessions",
             value: sessions.length,
             icon: BookOpen,
-            color: 'text-emerald-400',
-            bg: 'from-emerald-900/30',
+            color: "text-emerald-400",
+            bg: "from-emerald-900/30",
           },
         ].map(({ label, value, icon: Icon, color, bg }) => (
           <div
@@ -136,7 +143,9 @@ export default function ProfilePage() {
                 className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-4 py-3"
               >
                 <div>
-                  <p className="text-white text-sm font-medium">{formatDate(s.startTime)}</p>
+                  <p className="text-white text-sm font-medium">
+                    {formatDate(s.startTime)}
+                  </p>
                   <p className="text-white/40 text-xs mt-0.5">
                     Duration: {sessionDuration(s)}
                   </p>

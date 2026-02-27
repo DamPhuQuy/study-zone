@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { authApi } from '../api/auth';
-import toast from 'react-hot-toast';
-import { Music, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Music } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { authApi } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -18,12 +18,12 @@ export default function RegisterPage() {
     try {
       const res = await authApi.register(form);
       login(res.data);
-      toast.success('Account created! Welcome to StudyZone.');
-      navigate('/study');
+      toast.success("Account created! Welcome to StudyZone.");
+      navigate("/study");
     } catch (err: unknown) {
       const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-        'Registration failed';
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Registration failed";
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -45,7 +45,9 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-white/70 mb-1">Username</label>
+              <label className="block text-sm text-white/70 mb-1">
+                Username
+              </label>
               <input
                 type="text"
                 required
@@ -71,14 +73,18 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm text-white/70 mb-1">Password</label>
+              <label className="block text-sm text-white/70 mb-1">
+                Password
+              </label>
               <div className="relative">
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  type={showPw ? "text" : "password"}
                   required
                   minLength={6}
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
                   placeholder="••••••••"
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-white placeholder-white/30 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
                 />
@@ -87,7 +93,11 @@ export default function RegisterPage() {
                   onClick={() => setShowPw(!showPw)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition"
                 >
-                  {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPw ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -97,13 +107,16 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-60 text-white font-semibold rounded-xl transition mt-2"
             >
-              {loading ? 'Creating account…' : 'Create Account'}
+              {loading ? "Creating account…" : "Create Account"}
             </button>
           </form>
 
           <p className="text-center text-white/50 text-sm mt-6">
-            Already have an account?{' '}
-            <Link to="/login" className="text-violet-400 hover:text-violet-300 transition">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-violet-400 hover:text-violet-300 transition"
+            >
               Sign In
             </Link>
           </p>
