@@ -13,10 +13,6 @@ import com.studentzone.app.user.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    UserEntity save(UserEntity user);
-
-    Optional<UserEntity> findByUserId(Long id);
-
     @Query("select u from UserEntity u left join fetch u.studyHistory where u.id = :id")
     Optional<UserEntity> findByIdWithSessions(@Param("id") Long id);
 

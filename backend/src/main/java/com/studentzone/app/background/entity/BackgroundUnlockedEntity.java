@@ -2,12 +2,12 @@ package com.studentzone.app.background.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-
 import com.studentzone.app.user.entity.UserEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -26,7 +26,7 @@ import lombok.Setter;
 @Builder
 public class BackgroundUnlockedEntity {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
