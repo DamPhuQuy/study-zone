@@ -9,7 +9,7 @@ public class UserDetailedResponseDTO {
     private Long id;
     private String username;
     private String email;
-    private Long totalPoints;
+    private Double totalPoints;
     private Long totalTimes;
     private String avatarUrl;
 }

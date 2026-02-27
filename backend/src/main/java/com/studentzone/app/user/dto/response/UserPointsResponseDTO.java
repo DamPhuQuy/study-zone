@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class UserPointsResponseDTO {
     private Long id;
-    private Long totalPoints;
+    private Double totalPoints;
 }

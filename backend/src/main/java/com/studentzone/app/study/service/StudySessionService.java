@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.studentzone.app.study.dto.mapper.StudySessionMapper;
 import com.studentzone.app.study.dto.response.StudySessionResponseDTO;
@@ -32,9 +33,10 @@ public class StudySessionService {
                 .toList();
     }
 
+    @Transactional
     public StudySessionEntity startSession(Long userId) {
         UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
         StudySessionEntity studySession = StudySessionEntity.builder()
                 .user(user)
@@ -43,19 +45,33 @@ public class StudySessionService {
         return studySessionRepository.save(studySession);
     }
 
-    public StudySessionEntity endSession(Long sessionId) {
+    @Transactional
+    public StudySessionEntity endSession(Long sessionId, Long currentUserId) {
         StudySessionEntity studySession = studySessionRepository.findById(sessionId)
-                .orElseThrow(() -> new RuntimeException("Study session not found with id: " + sessionId));
+                .orElseThrow(() -> new IllegalArgumentException("Study session not found with id: " + sessionId));
+
+        if (studySession.getEndTime() != null) {
+            return studySession; // Session already ended, return as is
+        }
+
+        if (!studySession.getUser().getId().equals(currentUserId)) {
+            throw new IllegalArgumentException("Unauthorized: User cannot end this session");
+        }
 
         studySession.setEndTime(LocalDateTime.now());
 
-        // Points earned formula: 1 point for every 30 minutes of study time
         long minutesStudied = Duration.between(studySession.getStartTime(), studySession.getEndTime()).toMinutes();
 
-        long pointsEarned = minutesStudied / 30;
+        Double pointsEarned = minutesStudied * 0.0333; // 1 point for every 30 minutes (i.e., 1/30 points per minute)
 
         studySession.setPointsEarned(pointsEarned);
 
+        // update user's total points and total times
+        UserEntity user = studySession.getUser();
+        user.setTotalPoints(user.getTotalPoints() + pointsEarned);
+        user.setTotalTimes(user.getTotalTimes() + 1);
+
+        userRepository.save(user);
         return studySessionRepository.save(studySession);
     }
 }

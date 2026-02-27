@@ -10,7 +10,7 @@ import lombok.Data;
 public class StudySessionResponseDTO {
     private Long id;
     private Long userId;
-    private Long pointsEarned;
+    private Double pointsEarned;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 }

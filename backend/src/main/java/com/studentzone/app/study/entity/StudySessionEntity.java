@@ -34,5 +34,5 @@ public class StudySessionEntity {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Long pointsEarned;
+    private Double pointsEarned;
 }
