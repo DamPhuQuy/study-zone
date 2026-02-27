@@ -35,12 +35,12 @@ public class BackgroundController {
         return ResponseEntity.ok(ApiResponseCommon.success(backgroundService.getUnlockedBackByUserId(userId), "User unlocked backgrounds retrieved successfully"));
     }
 
-    @PostMapping("/me/saved-background/{backgroundId}")
+    @PostMapping("/me/saved-backgrounds/{backgroundId}")
     public ResponseEntity<ApiResponseCommon<BackgroundSavedResponseDTO>> saveBackground(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long backgroundId) {
         return ResponseEntity.ok(ApiResponseCommon.success(backgroundService.saveBackground(userId, backgroundId), "Background saved successfully"));
     }
 
-    @PostMapping("/me/unlocked-background/{backgroundId}")
+    @PostMapping("/me/unlocked-backgrounds/{backgroundId}")
     public ResponseEntity<ApiResponseCommon<BackgroundUnlockedResponseDTO>> unlockBackground(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long backgroundId) {
         return ResponseEntity.ok(ApiResponseCommon.success(backgroundService.unlockBackground(userId, backgroundId), "Background unlocked successfully"));
     }
@@ -51,7 +51,7 @@ public class BackgroundController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/me/saved/{backgroundId}")
+    @DeleteMapping("/me/saved-backgrounds/{backgroundId}")
     public ResponseEntity<Void> deleteSavedBackground(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long backgroundId) {
         backgroundService.deleteSavedBackground(userId, backgroundId);
         return ResponseEntity.noContent().build();
