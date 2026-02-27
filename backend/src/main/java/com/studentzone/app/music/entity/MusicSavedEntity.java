@@ -36,5 +36,5 @@ public class MusicSavedEntity {
     @JoinColumn(name = "music_id")
     private MusicEntity music;
 
-    LocalDateTime savedAt;
+    private LocalDateTime savedAt;
 }
