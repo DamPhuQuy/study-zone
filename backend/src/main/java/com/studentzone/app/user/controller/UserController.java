@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.studentzone.app.common.response.ApiResponseCommon;
 import com.studentzone.app.user.dto.request.UserCreateRequestDTO;
 import com.studentzone.app.user.dto.request.UserUpdateRequestDTO;
 import com.studentzone.app.user.dto.response.UserDetailedResponseDTO;
@@ -28,39 +29,39 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserDetailedResponseDTO> getCurrentUserDetails(@AuthenticationPrincipal(expression = "id") Long id) {
-        return ResponseEntity.ok(userService.getUserDetailsById(id));
+    public ResponseEntity<ApiResponseCommon<UserDetailedResponseDTO>> getCurrentUserDetails(@AuthenticationPrincipal(expression = "id") Long id) {
+        return ResponseEntity.ok(ApiResponseCommon.success(userService.getUserDetailsById(id), "User details retrieved successfully"));
     }
 
     @GetMapping("/me/points")
-    public ResponseEntity<UserPointsResponseDTO> getUserPoints(@AuthenticationPrincipal(expression = "id") Long id) {
-        return ResponseEntity.ok(userService.getUserPointsById(id));
+    public ResponseEntity<ApiResponseCommon<UserPointsResponseDTO>> getUserPoints(@AuthenticationPrincipal(expression = "id") Long id) {
+        return ResponseEntity.ok(ApiResponseCommon.success(userService.getUserPointsById(id), "User points retrieved successfully"));
     }
 
     @GetMapping("/me/times")
-    public ResponseEntity<UserTimesResponseDTO> getUserTimes(@AuthenticationPrincipal(expression = "id") Long id) {
-        return ResponseEntity.ok(userService.getUserTimesById(id));
+    public ResponseEntity<ApiResponseCommon<UserTimesResponseDTO>> getUserTimes(@AuthenticationPrincipal(expression = "id") Long id) {
+        return ResponseEntity.ok(ApiResponseCommon.success(userService.getUserTimesById(id), "User times retrieved successfully"));
     }
 
     @GetMapping("/me/saved-music")
-    public ResponseEntity<UserSavedMusicResponseDTO> getUserSavedMusic(@AuthenticationPrincipal(expression = "id") Long id) {
-        return ResponseEntity.ok(userService.getUserSavedMusicResponseDTO(id));
+    public ResponseEntity<ApiResponseCommon<UserSavedMusicResponseDTO>> getUserSavedMusic(@AuthenticationPrincipal(expression = "id") Long id) {
+        return ResponseEntity.ok(ApiResponseCommon.success(userService.getUserSavedMusicResponseDTO(id), "User saved music retrieved successfully"));
     }
 
     @GetMapping("/me/saved-backgrounds")
-    public ResponseEntity<UserSavedBackgroundResponseDTO> getUserSavedBackgrounds(@AuthenticationPrincipal(expression = "id") Long id) {
-        return ResponseEntity.ok(userService.getUserSavedBackgroundResponseDTO(id));
+    public ResponseEntity<ApiResponseCommon<UserSavedBackgroundResponseDTO>> getUserSavedBackgrounds(@AuthenticationPrincipal(expression = "id") Long id) {
+        return ResponseEntity.ok(ApiResponseCommon.success(userService.getUserSavedBackgroundResponseDTO(id), "User saved backgrounds retrieved successfully"));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Void> createUser(@RequestBody UserCreateRequestDTO request) {
+    public ResponseEntity<ApiResponseCommon<Void>> createUser(@RequestBody UserCreateRequestDTO request) {
         userService.createUser(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponseCommon.success(null, "User created successfully"));
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<Void> updateProfile(@RequestBody UserUpdateRequestDTO request, @AuthenticationPrincipal(expression = "id") Long id) {
+    public ResponseEntity<ApiResponseCommon<Void>> updateProfile(@RequestBody UserUpdateRequestDTO request, @AuthenticationPrincipal(expression = "id") Long id) {
         userService.updateUserProfile(id, request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponseCommon.success(null, "User profile updated successfully"));
     }
 }

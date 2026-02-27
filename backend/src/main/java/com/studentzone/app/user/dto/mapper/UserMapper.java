@@ -1,6 +1,5 @@
 package com.studentzone.app.user.dto.mapper;
 
-import com.studentzone.app.study.dto.mapper.StudySessionMapper;
 import com.studentzone.app.user.dto.request.UserCreateRequestDTO;
 import com.studentzone.app.user.dto.response.UserDetailedResponseDTO;
 import com.studentzone.app.user.dto.response.UserPointsResponseDTO;
@@ -27,9 +26,6 @@ public class UserMapper {
                 .totalPoints(user.getTotalPoints())
                 .totalTimes(user.getTotalTimes())
                 .avatarUrl(user.getAvatarUrl())
-                .studyHistory(user.getStudyHistory().stream()
-                        .map(StudySessionMapper::toDTO)
-                        .toList())
                 .build();
     }
 

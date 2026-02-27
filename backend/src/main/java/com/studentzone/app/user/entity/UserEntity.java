@@ -43,7 +43,7 @@ public class UserEntity {
     @Setter(lombok.AccessLevel.NONE)
     private String password;
 
-    private Long totalPoints;
+    private Double totalPoints;
 
     private Long totalTimes;
 
