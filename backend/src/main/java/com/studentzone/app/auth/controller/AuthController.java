@@ -13,16 +13,22 @@ import com.studentzone.app.auth.dto.RegisterRequestDTO;
 import com.studentzone.app.auth.service.AuthService;
 import com.studentzone.app.common.response.ApiResponseCommon;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "Register and login — no token required")
+@SecurityRequirements   // override global security: auth endpoints are public
 public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "Register a new user", description = "Creates a new account and returns a JWT token.")
     @PostMapping("/register")
     public ResponseEntity<ApiResponseCommon<AuthResponseDTO>> register(
             @Valid @RequestBody RegisterRequestDTO request) {
@@ -31,6 +37,7 @@ public class AuthController {
                 .body(ApiResponseCommon.success(response, "User registered successfully"));
     }
 
+    @Operation(summary = "Login", description = "Authenticate with username/email and password. Returns a JWT access token — paste it into the **Authorize** button above.")
     @PostMapping("/login")
     public ResponseEntity<ApiResponseCommon<AuthResponseDTO>> login(
             @Valid @RequestBody LoginRequestDTO request) {

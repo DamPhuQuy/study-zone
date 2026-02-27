@@ -54,14 +54,14 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponseCommon<Void>> createUser(@RequestBody UserCreateRequestDTO request) {
+    public ResponseEntity<Void> createUser(@RequestBody UserCreateRequestDTO request) {
         userService.createUser(request);
-        return ResponseEntity.ok(ApiResponseCommon.success(null, "User created successfully"));
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<ApiResponseCommon<Void>> updateProfile(@RequestBody UserUpdateRequestDTO request, @AuthenticationPrincipal(expression = "id") Long id) {
+    public ResponseEntity<Void> updateProfile(@RequestBody UserUpdateRequestDTO request, @AuthenticationPrincipal(expression = "id") Long id) {
         userService.updateUserProfile(id, request);
-        return ResponseEntity.ok(ApiResponseCommon.success(null, "User profile updated successfully"));
+        return ResponseEntity.noContent().build();
     }
 }
