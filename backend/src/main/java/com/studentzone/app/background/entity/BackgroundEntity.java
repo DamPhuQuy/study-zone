@@ -1,6 +1,9 @@
 package com.studentzone.app.background.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,9 +33,17 @@ public class BackgroundEntity {
 
     private String imageUrl;
 
+    private Long requiredPoint;
+
+    private boolean isActive;
+
     @OneToMany(mappedBy = "background", fetch = FetchType.LAZY)
     private List<BackgroundSavedEntity> backgroundSavedByUsers;
 
     @OneToMany(mappedBy = "background", fetch = FetchType.LAZY)
     private List<BackgroundUnlockedEntity> backgroundUnlockedByUsers;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

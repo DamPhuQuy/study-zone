@@ -11,7 +11,7 @@ import com.studentzone.app.background.entity.BackgroundSavedEntity;
 
 public interface BackgroundSavedRepository extends JpaRepository<BackgroundSavedEntity, Long> {
     BackgroundSavedEntity save(BackgroundSavedEntity backgroundSaved);
-    
+
     Optional<BackgroundSavedEntity> findById(Long id);
 
     @Query("select bs from BackgroundSavedEntity bs where bs.user.id = :userId and bs.background.id = :backgroundId")

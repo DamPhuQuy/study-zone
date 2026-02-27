@@ -25,36 +25,36 @@ public class MusicController {
         this.musicService = musicService;
     }
 
-    @GetMapping("/me/saved")
+    @GetMapping("/me/saved-music")
     public ResponseEntity<ApiResponseCommon<List<MusicSavedResponseDTO>>> getUserSavedMusic(@AuthenticationPrincipal(expression = "id") Long userId) {
         return ResponseEntity.ok(ApiResponseCommon.success(musicService.getSavedMusicByUserId(userId), "User saved music retrieved successfully"));
     }
 
-    @GetMapping("/me/unlocked")
+    @GetMapping("/me/unlocked-music")
     public ResponseEntity<ApiResponseCommon<List<MusicUnlockedResponseDTO>>> getUserUnlockedMusic(@AuthenticationPrincipal(expression = "id") Long userId) {
         return ResponseEntity.ok(ApiResponseCommon.success(musicService.getUnlockedMusicByUserId(userId), "User unlocked music retrieved successfully"));
     }
 
-    @PostMapping("/me/save/{musicId}")
+    @PostMapping("/me/saved-music/{musicId}")
     public ResponseEntity<ApiResponseCommon<MusicSavedResponseDTO>> saveMusic(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long musicId) {
         return ResponseEntity.ok(ApiResponseCommon.success(musicService.saveMusic(userId, musicId), "Music saved successfully"));
     }
 
-    @PostMapping("/me/unlock/{musicId}")
+    @PostMapping("/me/unlocked-music/{musicId}")
     public ResponseEntity<ApiResponseCommon<MusicUnlockedResponseDTO>> unlockMusic(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long musicId) {
         return ResponseEntity.ok(ApiResponseCommon.success(musicService.unlockMusic(userId, musicId), "Music unlocked successfully"));
     }
 
     // only admin
     @DeleteMapping("/{musicId}")
-    public ResponseEntity<ApiResponseCommon<Void>> deleteMusic(@PathVariable Long musicId) {
+    public ResponseEntity<Void> deleteMusic(@PathVariable Long musicId) {
         musicService.deleteMusic(musicId);
-        return ResponseEntity.ok(ApiResponseCommon.success(null, "Music deleted successfully"));
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/me/saved/{savedId}")
-    public ResponseEntity<ApiResponseCommon<Void>> deleteSavedMusic(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long savedId) {
-        musicService.deleteSavedMusic(userId, savedId);
-        return ResponseEntity.ok(ApiResponseCommon.success(null, "Saved music deleted successfully"));
+    @DeleteMapping("/me/saved/{musicId}")
+    public ResponseEntity<Void> deleteSavedMusic(@AuthenticationPrincipal(expression = "id") Long userId, @PathVariable Long musicId) {
+        musicService.deleteSavedMusic(userId, musicId);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -65,7 +65,7 @@ public class MusicService {
                                                                .music(music)
                                                                .unlockedAt(LocalDateTime.now())
                                                                .build();
-                                                      // user spent points to unlock
+        // user spent points to unlock
         user.setTotalPoints(user.getTotalPoints() - music.getRequiredPoint());
         userRepository.save(user);
 
@@ -93,14 +93,14 @@ public class MusicService {
     }
 
     @Transactional
-    public void deleteSavedMusic(Long userId, Long savedId) {
-        MusicSavedEntity musicSaved = musicSavedRepository.findById(savedId)
-                .orElseThrow(() -> new IllegalArgumentException("Saved music not found with id: " + savedId));
+    public void deleteSavedMusic(Long userId, Long musicId) {
+        MusicSavedEntity musicSavedEntity = musicSavedRepository.findByUserIdAndMusicId(userId, musicId)
+                .orElseThrow(() -> new IllegalArgumentException("Saved music not found for userId: " + userId + " and musicId: " + musicId));
 
-        if (!musicSaved.getUser().getId().equals(userId)) {
-            throw new IllegalArgumentException("User does not own this saved music");
+        if (musicSavedEntity == null) {
+            throw new IllegalArgumentException("Saved music not found for userId: " + userId + " and musicId: " + musicId);
         }
 
-        musicSavedRepository.delete(musicSaved);
+        musicSavedRepository.delete(musicSavedEntity);
     }
 }

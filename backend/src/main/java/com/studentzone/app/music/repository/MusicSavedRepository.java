@@ -23,5 +23,5 @@ public interface MusicSavedRepository extends JpaRepository<MusicSavedEntity, Lo
     List<MusicSavedEntity> findByUserId(@Param("userId") Long userId);
 
     @Query("select ms from MusicSavedEntity ms where ms.user.id = :userId and ms.music.id = :musicId")
-    MusicSavedEntity findByUserIdAndMusicId(@Param("userId") Long userId, @Param("musicId") Long musicId);
+    Optional<MusicSavedEntity> findByUserIdAndMusicId(@Param("userId") Long userId, @Param("musicId") Long musicId);
 }
